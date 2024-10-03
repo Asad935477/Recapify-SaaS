@@ -18,7 +18,8 @@ model User {
   name       String   @db.VarChar(191)
   email      String   @unique @db.VarChar(191)
   image      String?
-  oauth_id   String
+  provider   String   @db.VarChar(191)
+  oauth_id   String   @db.VarChar(191)
   coins      Int      @default(50)
   created_at DateTime @default(now())
 
