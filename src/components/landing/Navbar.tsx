@@ -23,7 +23,6 @@ export default function Navbar({ user }: { user?: CustomUser }) {
           ) : (
             <LoginModal />
           )}
-          ;
         </div>
       </div>
     </nav>
