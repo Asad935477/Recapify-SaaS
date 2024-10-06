@@ -2,14 +2,17 @@ import Footer from "@/components/landing/Footer";
 import HeroSection from "@/components/landing/HeroSection";
 import Navbar from "@/components/landing/Navbar";
 import Pricing from "@/components/landing/Pricing";
+import { getServerSession } from "next-auth";
 import React from "react";
+import { authOptions, CustomSession } from "./api/auth/[...nextauth]/options";
 
-function App() {
+async function App() {
+  const session: CustomSession | null = await getServerSession(authOptions);
   return (
     <>
-      <Navbar />
+      <Navbar user={session?.user} />
       <HeroSection />
-      <Pricing />
+      <Pricing user={session?.user} />
       <Footer />
     </>
   );
