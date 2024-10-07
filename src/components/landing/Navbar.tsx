@@ -11,7 +11,7 @@ export default function Navbar({ user }: { user?: CustomUser }) {
       <div className="container mx-auto flex justify-between items-center p-6">
         <div className="flex items-center space-x-2">
           <Image src="/images/icon_192.png" width={40} height={40} alt="lgo" />
-          <h1 className="text-3xl font-extrabold ">Recapify</h1>
+          <h1 className="text-3xl font-mono ">Recapify</h1>
         </div>
 
         <div className="space-x-4">
