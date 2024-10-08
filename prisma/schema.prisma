@@ -14,14 +14,52 @@ datasource db {
 }
 
 model User {
-  id         Int      @id @default(autoincrement())
-  name       String   @db.VarChar(191)
-  email      String   @unique @db.VarChar(191)
-  image      String?
-  provider   String   @db.VarChar(191)
-  oauth_id   String
-  coins      Int      @default(50)
-  created_at DateTime @default(now())
+  id           Int            @id @default(autoincrement())
+  name         String         @db.VarChar(191)
+  email        String         @unique @db.VarChar(191)
+  image        String?
+  provider     String         @db.VarChar(191)
+  oauth_id     String
+  coins        Int            @default(50)
+  created_at   DateTime       @default(now())
+  Transactions Transactions[]
+  CoinSpend    CoinSpend[]
+  Summary      Summary[]
 
   @@map("users")
+}
+
+model Summary {
+  id         String      @id @default(uuid()) @db.Uuid
+  user_id    Int
+  user       User        @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  title      String
+  url        String
+  response   String?
+  created_at DateTime    @default(now())
+  CoinSpend  CoinSpend[]
+
+  @@map("summary")
+}
+
+model Transactions {
+  id         String   @id @default(uuid()) @db.Uuid
+  user_id    Int
+  user       User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  amount     Int
+  status     Int      @db.SmallInt
+  created_at DateTime @default(now())
+
+  @@map("transactions")
+}
+
+model CoinSpend {
+  id         Int      @id @default(autoincrement())
+  user_id    Int
+  user       User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  summary    Summary  @relation(fields: [summary_id], references: [id], onDelete: Cascade)
+  summary_id String   @db.Uuid
+  created_at DateTime @default(now())
+
+  @@map("coins_spend")
 }
