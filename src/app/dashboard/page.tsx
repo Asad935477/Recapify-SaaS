@@ -2,6 +2,7 @@ import DashNav from "@/components/dashboard/DashNav";
 import { authOptions, CustomSession } from "../api/auth/[...nextauth]/options";
 import { getServerSession } from "next-auth";
 import { getUserCoins } from "@/actions/fetchActions";
+import UrlInput from "@/components/dashboard/UrlInput";
 
 async function Dashboard() {
   const session: CustomSession | null = await getServerSession(authOptions);
@@ -10,6 +11,7 @@ async function Dashboard() {
     <>
       <div className="container">
         <DashNav user={session?.user!} userCoins={userCoins} />
+        <UrlInput />
       </div>
     </>
   );
