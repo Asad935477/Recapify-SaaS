@@ -1,9 +1,10 @@
 "use client";
-import React, { useState } from "react";
+import React, { useActionState, useState } from "react";
+import Loading from "../common/Loading";
 
 export default function UrlInput() {
   const [url, setUrl] = useState("");
-
+  const [loading, setLoading] = useState(false);
   const handleSubmit = (event: React.FormEvent) => {};
 
   return (
@@ -15,7 +16,11 @@ export default function UrlInput() {
           placeholder="Enter URL Of The Video You Want To Summarize..."
           value={url}
           onChange={(e) => setUrl(e.target.value)}
+          disabled={loading}
         />
+        <div className="">
+          <Loading />
+        </div>
       </form>
     </div>
   );
