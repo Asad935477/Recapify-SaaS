@@ -42,3 +42,4 @@ ALTER TABLE "coins_spend" ADD CONSTRAINT "coins_spend_user_id_fkey" FOREIGN KEY 
 
 -- AddForeignKey
 ALTER TABLE "coins_spend" ADD CONSTRAINT "coins_spend_summary_id_fkey" FOREIGN KEY ("summary_id") REFERENCES "summary"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
