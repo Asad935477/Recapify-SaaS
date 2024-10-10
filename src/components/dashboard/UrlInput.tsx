@@ -18,7 +18,7 @@ export default function UrlInput() {
           onChange={(e) => setUrl(e.target.value)}
           disabled={loading}
         />
-        <div className="">
+        <div className=" absolute right-3 top-3">
           <Loading />
         </div>
       </form>
