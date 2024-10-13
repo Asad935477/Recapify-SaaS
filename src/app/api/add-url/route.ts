@@ -3,6 +3,8 @@ import { getToken } from "next-auth/jwt";
 import { NextRequest, NextResponse } from "next/server";
 import vine, { errors } from "@vinejs/vine";
 import { getUserCoins } from "@/actions/fetchActions";
+import { YoutubeLoader } from "@langchain/community/document_loaders/web/youtube";
+import { Document } from "@langchain/core/documents";
 
 export async function POST(req: NextRequest) {
   try {
@@ -26,6 +28,22 @@ export async function POST(req: NextRequest) {
         { status: 400 }
       );
     }
+
+    let text: Document<Record<string, any>>[];
+    try {
+      const loader = YoutubeLoader.createFromUrl(payload.url, {
+        language: "en",
+        addVideoInfo: true,
+      });
+
+      text = await loader.load();
+    } catch (error) {
+      return NextResponse.json({
+        message:
+          "Transcription Is Not Possible For This Video.. Please Try With Another One",
+      });
+    }
+
     return NextResponse.json({ payload });
   } catch (error) {
     console.log("The Add URL Error", error);
