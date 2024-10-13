@@ -38,10 +38,13 @@ export async function POST(req: NextRequest) {
 
       text = await loader.load();
     } catch (error) {
-      return NextResponse.json({
-        message:
-          "Transcription Is Not Possible For This Video.. Please Try With Another One",
-      });
+      return NextResponse.json(
+        {
+          message:
+            "Transcription Is Not Possible For This Video.. Please Try With Another One",
+        },
+        { status: 404 }
+      );
     }
 
     return NextResponse.json({ payload });
