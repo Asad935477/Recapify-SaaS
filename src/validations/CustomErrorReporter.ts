@@ -24,8 +24,8 @@ export class CustomErrorReporter implements ErrorReporterContract {
      * Collecting errors as per the JSONAPI spec
      */
 
-    this.errors[field.wildCardPath] = message
-}
+    this.errors[field.wildCardPath] = message;
+  }
 
   /**
    * Creates and returns an instance of the
