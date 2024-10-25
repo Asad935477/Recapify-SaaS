@@ -5,12 +5,13 @@ import vine, { errors } from "@vinejs/vine";
 import { getUserCoins } from "@/actions/fetchActions";
 import { YoutubeLoader } from "@langchain/community/document_loaders/web/youtube";
 import { Document } from "@langchain/core/documents";
+import { title } from "process";
 
 export async function POST(req: NextRequest) {
   try {
-    const token = await getToken({ req });
-    if (!token) {
-      return NextResponse.json({ message: "UnAuthorized" }, { status: 401 });
+    // const token = await getToken({ req });
+    // if (!token) {
+    //   return NextResponse.json({ message: "UnAuthorized" }, { status: 401 });
     }
 
     const body = await req.json();
@@ -46,6 +47,15 @@ export async function POST(req: NextRequest) {
         { status: 404 }
       );
     }
+
+    // //*Add Entry in Summary
+    // const summary = await prisma.summary.create({
+    //   data:{
+    //     ...payload,
+    //     user_id:Number(payload.user_id)
+    //     title:
+    //   }
+    // })
 
     return NextResponse.json({ payload });
   } catch (error) {
