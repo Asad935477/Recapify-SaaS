@@ -55,7 +55,7 @@ export async function POST(req: NextRequest) {
     //   }
     // })
 
-    return NextResponse.json({ payload });
+    return NextResponse.json({ data: text });
   } catch (error) {
     console.log("The Add URL Error", error);
     if (error instanceof errors.E_VALIDATION_ERROR) {
