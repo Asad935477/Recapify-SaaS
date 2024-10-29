@@ -1,11 +1,25 @@
 "use client";
 import React, { useActionState, useState } from "react";
 import Loading from "../common/Loading";
+import axios, { AxiosError } from "axios";
 
 export default function UrlInput() {
   const [url, setUrl] = useState("");
   const [loading, setLoading] = useState(false);
-  const handleSubmit = (event: React.FormEvent) => {};
+  const [errors, setErrors] = useState<addUrlErrorType>({});
+
+  const handleSubmit = (event: React.FormEvent) => {
+    try {
+      event.preventDefault();
+      setLoading(true);
+    } catch (error) {
+      setLoading(false);
+      if (error instanceof AxiosError) {
+        if (error.response?.status === 422) {
+        }
+      }
+    }
+  };
 
   return (
     <div className="flex justify-center items-center mt-10 w-full">
