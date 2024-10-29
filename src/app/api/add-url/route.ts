@@ -9,10 +9,10 @@ import { title } from "process";
 
 export async function POST(req: NextRequest) {
   try {
-    // const token = await getToken({ req });
-    // if (!token) {
-    //   return NextResponse.json({ message: "UnAuthorized" }, { status: 401 });
-    // }
+    const token = await getToken({ req });
+    if (!token) {
+      return NextResponse.json({ message: "UnAuthorized" }, { status: 401 });
+    }
     const body = await req.json();
     const Validator = vine.compile(summarySchema);
     const payload = await Validator.validate(body);
@@ -46,16 +46,19 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // //*Add Entry in Summary
-    // const summary = await prisma.summary.create({
-    //   data:{
-    //     ...payload,
-    //     user_id:Number(payload.user_id)
-    //     title:
-    //   }
-    // })
+    //*Add Entry in Summary
+    const summary = await prisma.summary.create({
+      data: {
+        ...payload,
+        user_id: Number(payload.user_id),
+        title: text[0].metadata?.title ?? "404 Title Not Available",
+      },
+    });
 
-    return NextResponse.json({ data: text });
+    return NextResponse.json({
+      message: "URL Added Successfully",
+      data: summary,
+    });
   } catch (error) {
     console.log("The Add URL Error", error);
     if (error instanceof errors.E_VALIDATION_ERROR) {
