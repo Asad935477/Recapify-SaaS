@@ -3,16 +3,21 @@ import React, { useActionState, useState } from "react";
 import Loading from "../common/Loading";
 import axios, { AxiosError } from "axios";
 import { toast } from "sonner";
+import { CustomUser } from "@/app/api/auth/[...nextauth]/options";
 
-export default function UrlInput() {
+export default function UrlInput({ user }: { user: CustomUser }) {
   const [url, setUrl] = useState("");
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState<addUrlErrorType>({});
 
-  const handleSubmit = (event: React.FormEvent) => {
+  const handleSubmit = async (event: React.FormEvent) => {
     try {
       event.preventDefault();
       setLoading(true);
+      const {} = await axios.post("/api/add-url", {
+        url: url,
+        user_id: user.id,
+      });
     } catch (error) {
       setLoading(false);
       if (error instanceof AxiosError) {
