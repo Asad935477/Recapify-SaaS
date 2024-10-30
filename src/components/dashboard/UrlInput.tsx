@@ -14,7 +14,7 @@ export default function UrlInput({ user }: { user: CustomUser }) {
     try {
       event.preventDefault();
       setLoading(true);
-      const {} = await axios.post("/api/add-url", {
+      const { data } = await axios.post("/api/add-url", {
         url: url,
         user_id: user.id,
       });
