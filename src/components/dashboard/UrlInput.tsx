@@ -2,6 +2,7 @@
 import React, { useActionState, useState } from "react";
 import Loading from "../common/Loading";
 import axios, { AxiosError } from "axios";
+import { toast } from "sonner";
 
 export default function UrlInput() {
   const [url, setUrl] = useState("");
@@ -16,6 +17,9 @@ export default function UrlInput() {
       setLoading(false);
       if (error instanceof AxiosError) {
         if (error.response?.status === 422) {
+          setErrors(error?.response?.data?.errors);
+        } else {
+          toast.error(error?.response?.data?.message);
         }
       }
     }
