@@ -11,7 +11,7 @@ async function Dashboard() {
     <>
       <div className="container">
         <DashNav user={session?.user!} userCoins={userCoins} />
-        <UrlInput />
+        <UrlInput user={session?.user!} />
       </div>
     </>
   );

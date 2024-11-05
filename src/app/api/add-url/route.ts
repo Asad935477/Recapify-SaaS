@@ -6,25 +6,25 @@ import { getUserCoins } from "@/actions/fetchActions";
 import { YoutubeLoader } from "@langchain/community/document_loaders/web/youtube";
 import { Document } from "@langchain/core/documents";
 import { title } from "process";
+import prisma from "@/lib/db.config";
 
 export async function POST(req: NextRequest) {
   try {
-    // const token = await getToken({ req });
-    // if (!token) {
-    //   return NextResponse.json({ message: "UnAuthorized" }, { status: 401 });
+    const token = await getToken({ req });
+    if (!token) {
+      return NextResponse.json({ message: "UnAuthorized" }, { status: 401 });
     }
-
     const body = await req.json();
     const Validator = vine.compile(summarySchema);
     const payload = await Validator.validate(body);
 
-    //*CHECK IF USER HAVE SUFFICIENT COINS TO MAKE REQUESTS OR NOT
+    //*CHECK IF USER HAS SUFFICIENT COINS TO MAKE REQUESTS OR NOT
     const userCoins = await getUserCoins(payload.user_id);
-    if (userCoins === null || (userCoins?.coins && userCoins?.coins > 10)) {
+    if (userCoins === null || (userCoins?.coins && userCoins?.coins <= 10)) {
       return NextResponse.json(
         {
           message:
-            "You Don't Have Suffienct Coins To Make More Requests. Please Add More Coins To Continue Using Our Services",
+            "You Don't Have Sufficient Coins To Make More Requests. Please Add More Coins To Continue Using Our Services",
         },
         { status: 400 }
       );
@@ -36,7 +36,6 @@ export async function POST(req: NextRequest) {
         language: "en",
         addVideoInfo: true,
       });
-
       text = await loader.load();
     } catch (error) {
       return NextResponse.json(
@@ -48,16 +47,19 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // //*Add Entry in Summary
-    // const summary = await prisma.summary.create({
-    //   data:{
-    //     ...payload,
-    //     user_id:Number(payload.user_id)
-    //     title:
-    //   }
-    // })
+    //*Add Entry in Summary
+    const summary = await prisma.summary.create({
+      data: {
+        ...payload,
+        user_id: Number(payload.user_id),
+        title: text[0].metadata?.title ?? "404 Title Not Available",
+      },
+    });
 
-    return NextResponse.json({ payload });
+    return NextResponse.json({
+      message: "URL Added Successfully",
+      data: summary,
+    });
   } catch (error) {
     console.log("The Add URL Error", error);
     if (error instanceof errors.E_VALIDATION_ERROR) {
