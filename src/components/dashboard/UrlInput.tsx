@@ -51,6 +51,7 @@ export default function UrlInput({ user }: { user: CustomUser }) {
         <div className=" absolute right-3 top-3">
           <Loading />
         </div>
+        <span className="text-red-500">{errors?.url}</span>
       </form>
     </div>
   );
