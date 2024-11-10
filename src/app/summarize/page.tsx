@@ -1,11 +1,21 @@
 import React from "react";
+import { notFound } from "next/navigation";
+import { getSummary } from "@/actions/fetchActions";
 
-function Summarize({
+export default async function Summarize({
   searchParams,
 }: {
   searchParams: { [key: string]: string | undefined };
 }) {
-  if (!searchParams) return <div>Summarize</div>;
-}
+  if (!searchParams?.["id"]) {
+    return notFound();
+  }
 
-export default page;
+  const summary: SummaryType | null = await getSummary(searchParams?.["id"]);
+
+  if (!summary) {
+    return notFound();
+  }
+
+  return <div>Summarize</div>;
+}
