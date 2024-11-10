@@ -15,3 +15,12 @@ export const getUserCoins = unstable_cache(
   ["userCoins"],
   { revalidate: 60 * 60, tags: ["userCoins"] }
 );
+
+export const getSummary = async () => {
+  const summary = await prisma.summary.findUnique({
+    where: {
+      id: id,
+    },
+  });
+  return summary;
+};
