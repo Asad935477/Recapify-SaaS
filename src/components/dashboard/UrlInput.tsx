@@ -1,5 +1,5 @@
 "use client";
-import React, { useActionState, useState } from "react";
+import React, { useState } from "react";
 import Loading from "../common/Loading";
 import axios, { AxiosError } from "axios";
 import { toast } from "sonner";
@@ -42,15 +42,17 @@ export default function UrlInput({ user }: { user: CustomUser }) {
       <form onSubmit={handleSubmit} className="relative w-full md:w-[500px]">
         <input
           className="w-full md:w-[500px] h-12 rounded-md bg-muted border border-slate-400 border-dashed p-3 outline-none"
-          type="url"
+          type="text"
           placeholder="Enter URL Of The Video You Want To Summarize..."
           value={url}
           onChange={(e) => setUrl(e.target.value)}
           disabled={loading}
         />
-        <div className=" absolute right-3 top-3">
-          <Loading />
-        </div>
+        {loading && (
+          <div className=" absolute right-3 top-3">
+            <Loading />
+          </div>
+        )}
         <span className="text-red-500">{errors?.url}</span>
       </form>
     </div>
