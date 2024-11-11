@@ -17,7 +17,7 @@ export const getUserCoins = unstable_cache(
 );
 
 export const getSummary = async () => {
-  const summary = await prisma.summary.findUnique({
+  const summary = await prisma.summary.findFirst({
     where: {
       id: id,
     },
