@@ -1,5 +1,5 @@
 "use client";
-import React, { useActionState, useState } from "react";
+import React, { useState } from "react";
 import Loading from "../common/Loading";
 import axios, { AxiosError } from "axios";
 import { toast } from "sonner";
@@ -48,9 +48,12 @@ export default function UrlInput({ user }: { user: CustomUser }) {
           onChange={(e) => setUrl(e.target.value)}
           disabled={loading}
         />
-        <div className=" absolute right-3 top-3">
-          <Loading />
-        </div>
+        {loading && (
+          <div className=" absolute right-3 top-3">
+            <Loading />
+          </div>
+        )}
+        <span className="text-red-500">{errors?.url}</span>
       </form>
     </div>
   );

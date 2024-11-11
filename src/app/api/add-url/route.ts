@@ -5,7 +5,6 @@ import vine, { errors } from "@vinejs/vine";
 import { getUserCoins } from "@/actions/fetchActions";
 import { YoutubeLoader } from "@langchain/community/document_loaders/web/youtube";
 import { Document } from "@langchain/core/documents";
-import { title } from "process";
 import prisma from "@/lib/db.config";
 
 export async function POST(req: NextRequest) {
@@ -47,7 +46,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    //*Add Entry in Summary
+    //*ADD ENTRY IN SUMMARY
     const summary = await prisma.summary.create({
       data: {
         ...payload,
