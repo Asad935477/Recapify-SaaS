@@ -12,10 +12,13 @@ export default async function Summarize({
   }
 
   const summary: SummaryType | null = await getSummary(searchParams?.["id"]);
-
   if (!summary) {
     return notFound();
   }
 
-  return <div>Summarize</div>;
+  return (
+    <div>
+      <p>{searchParams?.["id"]}</p>
+    </div>
+  );
 }
