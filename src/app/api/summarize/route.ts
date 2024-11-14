@@ -7,5 +7,10 @@ interface SummerizePayload {
 
 export async function POST(request: NextRequest) {
   try {
-  } catch (error) {}
+  } catch (error) {
+    return NextResponse.json(
+      { message: `Something Went Wrong!!! Please Try Again Later...` },
+      { status: 500 }
+    );
+  }
 }
