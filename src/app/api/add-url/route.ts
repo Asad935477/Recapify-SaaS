@@ -70,8 +70,9 @@ export async function POST(req: NextRequest) {
         { status: 422 }
       );
     }
-    return NextResponse.json({
-      message: `Something Went Wrong!!! Please Try Again Later...`,
-    });
+    return NextResponse.json(
+      { message: `Something Went Wrong!!! Please Try Again Later...` },
+      { status: 500 }
+    );
   }
 }
