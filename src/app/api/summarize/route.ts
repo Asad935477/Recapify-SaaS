@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { authOptions, CustomSession } from "../auth/[...nextauth]/options";
 import { getServerSession } from "next-auth";
 import { getUserCoins } from "@/actions/fetchActions";
+import prisma from "@/lib/db.config";
 
 interface SummerizePayload {
   url: string;
@@ -27,6 +28,16 @@ export async function POST(request: NextRequest) {
         { status: 400 }
       );
     }
+
+    // CHECK IF THERE IS ANY IDENTICAL SUMMARY AVAILABLE
+    const oldSummary = await prisma.summary.findFirst({
+      select: {
+        response: true,
+      },
+      where: {
+        url: body.url,
+      },
+    });
   } catch (error) {
     return NextResponse.json(
       { message: `Something Went Wrong!!! Please Try Again Later...` },
