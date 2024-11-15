@@ -10,6 +10,9 @@ interface SummerizePayload {
 export async function POST(request: NextRequest) {
   try {
     const session: CustomSession | null = await getServerSession(authOptions);
+    if (!session) {
+      return NextResponse.json({ message: "UnAuthorized" }, { status: 401 });
+    }
   } catch (error) {
     return NextResponse.json(
       { message: `Something Went Wrong!!! Please Try Again Later...` },
