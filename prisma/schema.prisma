@@ -39,6 +39,7 @@ model Summary {
   created_at DateTime    @default(now())
   CoinSpend  CoinSpend[]
 
+  @@index([url, created_at])
   @@map("summary")
 }
 
