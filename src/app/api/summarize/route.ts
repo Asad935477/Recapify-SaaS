@@ -38,6 +38,14 @@ export async function POST(request: NextRequest) {
         url: body.url,
       },
     });
+
+    if (oldSummary != null && oldSummary.response) {
+      /*
+      //* TODOS
+          1. DEDUCT USER COINS FOR EACH REQUEST
+          2. ENTER THE DEDUCTED COIN INFO TO THE DATABASE
+      */
+    }
   } catch (error) {
     return NextResponse.json(
       { message: `Something Went Wrong!!! Please Try Again Later...` },
