@@ -12,3 +12,13 @@ export async function minusCoins(user_id: number | string): Promise<void> {
     },
   });
 }
+
+export async function addCoins(
+  user_id: number | string,
+  coins: number
+): Promise<void> {
+  await prisma.user.update({
+    where: { id: Number(user_id) },
+    data: { coins: { increment: coins } },
+  });
+}
