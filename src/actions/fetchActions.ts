@@ -1,3 +1,4 @@
+"use server";
 import { prisma } from "@/lib/db.config";
 import { unstable_cache } from "next/cache";
 
