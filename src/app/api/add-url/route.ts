@@ -29,6 +29,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    //*LOAD OR HANDLE YOUTUBE TRANSCRIPTION
     let text: Document<Record<string, any>>[];
     try {
       const loader = YoutubeLoader.createFromUrl(payload.url, {
