@@ -74,6 +74,13 @@ export async function POST(request: NextRequest) {
         );
       }
     }
+
+    const splitter = new TokenTextSplitter({
+      chunkSize: 10000,
+      chunkOverlap: 250,
+    });
+
+    const docsSummary = await splitter.splitDocuments(docs);
   } catch (error) {
     return NextResponse.json(
       { message: `Something Went Wrong!!! Please Try Again Later...` },
