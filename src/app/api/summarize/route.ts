@@ -56,7 +56,24 @@ export async function POST(request: NextRequest) {
         data: oldSummary?.response,
       });
 
-
+      // EXTRACTING TRANSCRIPT
+      let text: Document<Record<string, any>>[];
+      try {
+        const loader = YoutubeLoader.createFromUrl(body.url, {
+          language: "en",
+          addVideoInfo: true,
+        });
+        text = await loader.load();
+      } catch (error) {
+        return NextResponse.json(
+          {
+            message:
+              "Transcription Is Not Possible For This Video.. Please Try With Another One",
+          },
+          { status: 404 }
+        );
+      }
+    }
   } catch (error) {
     return NextResponse.json(
       { message: `Something Went Wrong!!! Please Try Again Later...` },
