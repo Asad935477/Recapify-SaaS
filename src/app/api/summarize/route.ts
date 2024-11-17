@@ -3,6 +3,8 @@ import { authOptions, CustomSession } from "../auth/[...nextauth]/options";
 import { getServerSession } from "next-auth";
 import { getUserCoins } from "@/actions/fetchActions";
 import prisma from "@/lib/db.config";
+import { coinSpend, minusCoins } from "@/actions/commonActions";
+import { messageToOpenAIRole } from "@langchain/openai";
 
 interface SummerizePayload {
   url: string;
@@ -41,9 +43,9 @@ export async function POST(request: NextRequest) {
 
     if (oldSummary != null && oldSummary.response) {
       /*
-      //* TODOS
-          1. DEDUCT USER COINS FOR EACH REQUEST
-          2. ENTER THE DEDUCTED COIN INFO TO THE DATABASE
+      TODOS
+        1. DEDUCT USER COINS FOR EACH REQUEST
+        2. ENTER THE DEDUCTED COIN INFO TO THE DATABASE
       */
     }
   } catch (error) {
