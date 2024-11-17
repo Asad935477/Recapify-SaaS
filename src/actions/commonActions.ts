@@ -22,3 +22,12 @@ export async function addCoins(
     data: { coins: { increment: coins } },
   });
 }
+
+export async function coinSpend(
+  user_id: number | string,
+  summary_id: string
+): Promise<void> {
+  await prisma.coinSpend.create({
+    data: { user_id: Number(user_id), summary_id: summary_id },
+  });
+}
