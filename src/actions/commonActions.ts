@@ -31,3 +31,10 @@ export async function coinSpend(
     data: { user_id: Number(user_id), summary_id: summary_id },
   });
 }
+
+export async function updateSummary(data: string, id: string): Promise<void> {
+  await prisma.summary.update({
+    data: { response: data },
+    where: { id: id },
+  });
+}
