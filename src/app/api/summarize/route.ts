@@ -47,6 +47,13 @@ export async function POST(request: NextRequest) {
         1. DEDUCT USER COINS FOR EACH REQUEST
         2. ENTER THE DEDUCTED COIN INFO TO THE DATABASE
       */
+
+      await minusCoins(session?.user?.id!);
+      await coinSpend(session?.user?.id!, body.id);
+      return NextResponse.json({
+        message: "Podcast / Video Summary",
+        data: oldSummary?.response,
+      });
     }
   } catch (error) {
     return NextResponse.json(
