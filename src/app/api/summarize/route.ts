@@ -4,7 +4,8 @@ import { getServerSession } from "next-auth";
 import { getUserCoins } from "@/actions/fetchActions";
 import prisma from "@/lib/db.config";
 import { coinSpend, minusCoins } from "@/actions/commonActions";
-import { messageToOpenAIRole } from "@langchain/openai";
+import { YoutubeLoader } from "@langchain/community/document_loaders/web/youtube";
+import { Document } from "@langchain/core/documents";
 
 interface SummerizePayload {
   url: string;
@@ -54,7 +55,8 @@ export async function POST(request: NextRequest) {
         message: "Podcast / Video Summary",
         data: oldSummary?.response,
       });
-    }
+
+
   } catch (error) {
     return NextResponse.json(
       { message: `Something Went Wrong!!! Please Try Again Later...` },
