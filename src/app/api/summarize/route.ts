@@ -92,6 +92,7 @@ export async function POST(request: NextRequest) {
       verbose: true,
       combinePrompt: summaryPrompt,
     });
+    const res = await summaryChain.invoke({ input_documents: docsSummary });
   } catch (error) {
     return NextResponse.json(
       { message: `Something Went Wrong!!! Please Try Again Later...` },
