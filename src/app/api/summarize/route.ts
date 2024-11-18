@@ -11,6 +11,7 @@ import { TokenTextSplitter } from "@langchain/textsplitters";
 import { PromptTemplate } from "@langchain/core/prompts";
 import { summaryTemplate } from "@/lib/prompts";
 import { loadSummarizationChain } from "langchain/chains";
+import { gptModal } from "@/lib/langchain";
 
 interface SummerizePayload {
   url: string;
@@ -86,7 +87,11 @@ export async function POST(request: NextRequest) {
     });
     const docsSummary = await splitter.splitDocuments(text);
     const summaryPrompt = PromptTemplate.fromTemplate(summaryTemplate);
-    const summaryChain = loadSummarizationChain;
+    const summaryChain = loadSummarizationChain(gptModal, {
+      type: "map_reduce",
+      verbose: true,
+      combinePrompt: summaryPrompt,
+    });
   } catch (error) {
     return NextResponse.json(
       { message: `Something Went Wrong!!! Please Try Again Later...` },
