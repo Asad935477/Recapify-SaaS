@@ -10,6 +10,7 @@ import { text } from "stream/consumers";
 import { TokenTextSplitter } from "@langchain/textsplitters";
 import { PromptTemplate } from "@langchain/core/prompts";
 import { summaryTemplate } from "@/lib/prompts";
+import { loadSummarizationChain } from "langchain/chains";
 
 interface SummerizePayload {
   url: string;
