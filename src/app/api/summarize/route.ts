@@ -6,6 +6,7 @@ import prisma from "@/lib/db.config";
 import { coinSpend, minusCoins } from "@/actions/commonActions";
 import { YoutubeLoader } from "@langchain/community/document_loaders/web/youtube";
 import { Document } from "@langchain/core/documents";
+import { text } from "stream/consumers";
 
 interface SummerizePayload {
   url: string;
@@ -80,7 +81,7 @@ export async function POST(request: NextRequest) {
       chunkOverlap: 250,
     });
 
-    const docsSummary = await splitter.splitDocuments(docs);
+    const docsSummary = await splitter.splitDocuments(text);
   } catch (error) {
     return NextResponse.json(
       { message: `Something Went Wrong!!! Please Try Again Later...` },
