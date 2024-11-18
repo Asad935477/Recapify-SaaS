@@ -85,6 +85,7 @@ export async function POST(request: NextRequest) {
     });
     const docsSummary = await splitter.splitDocuments(text);
     const summaryPrompt = PromptTemplate.fromTemplate(summaryTemplate);
+    const summaryChain = loadSummarizationChain;
   } catch (error) {
     return NextResponse.json(
       { message: `Something Went Wrong!!! Please Try Again Later...` },
