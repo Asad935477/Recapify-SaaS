@@ -102,6 +102,8 @@ export async function POST(request: NextRequest) {
     await minusCoins(session?.user?.id!);
     await coinSpend(session?.user?.id!, body.id);
     await updateSummary(res?.text, body.id);
+
+    return NextResponse.json({ message: "Video Summary", data: res?.text });
   } catch (error) {
     return NextResponse.json(
       { message: `Something Went Wrong!!! Please Try Again Later...` },
