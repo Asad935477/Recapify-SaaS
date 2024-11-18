@@ -82,6 +82,7 @@ export async function POST(request: NextRequest) {
       chunkOverlap: 250,
     });
     const docsSummary = await splitter.splitDocuments(text);
+    const summaryPrompt = PromptTemplate;
   } catch (error) {
     return NextResponse.json(
       { message: `Something Went Wrong!!! Please Try Again Later...` },
