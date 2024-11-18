@@ -3,7 +3,7 @@ import { authOptions, CustomSession } from "../auth/[...nextauth]/options";
 import { getServerSession } from "next-auth";
 import { getUserCoins } from "@/actions/fetchActions";
 import { prisma } from "@/lib/db.config";
-import { coinSpend, minusCoins } from "@/actions/commonActions";
+import { coinSpend, minusCoins, updateSummary } from "@/actions/commonActions";
 import { YoutubeLoader } from "@langchain/community/document_loaders/web/youtube";
 import { Document } from "@langchain/core/documents";
 import { text } from "stream/consumers";
@@ -54,9 +54,9 @@ export async function POST(request: NextRequest) {
         1. DEDUCT USER COINS FOR EACH REQUEST
         2. ENTER THE DEDUCTED COIN INFO TO THE DATABASE
       */
-
       await minusCoins(session?.user?.id!);
       await coinSpend(session?.user?.id!, body.id);
+
       return NextResponse.json({
         message: "Podcast / Video Summary",
         data: oldSummary?.response,
@@ -93,6 +93,15 @@ export async function POST(request: NextRequest) {
       combinePrompt: summaryPrompt,
     });
     const res = await summaryChain.invoke({ input_documents: docsSummary });
+
+    /*TODOS
+        1. DEDUCT USER COINS FOR EACH REQUEST
+        2. ENTER THE DEDUCTED COIN INFO TO THE DATABASE
+        3. UPDATE THE SUMMARY INFORMATION IN THE DATABASE*/
+
+    await minusCoins(session?.user?.id!);
+    await coinSpend(session?.user?.id!, body.id);
+    await updateSummary(res?.text, body.id);
   } catch (error) {
     return NextResponse.json(
       { message: `Something Went Wrong!!! Please Try Again Later...` },
