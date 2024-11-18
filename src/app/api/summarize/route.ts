@@ -2,12 +2,13 @@ import { NextRequest, NextResponse } from "next/server";
 import { authOptions, CustomSession } from "../auth/[...nextauth]/options";
 import { getServerSession } from "next-auth";
 import { getUserCoins } from "@/actions/fetchActions";
-import prisma from "@/lib/db.config";
+import { prisma } from "@/lib/db.config";
 import { coinSpend, minusCoins } from "@/actions/commonActions";
 import { YoutubeLoader } from "@langchain/community/document_loaders/web/youtube";
 import { Document } from "@langchain/core/documents";
 import { text } from "stream/consumers";
 import { TokenTextSplitter } from "@langchain/textsplitters";
+import { PromptTemplate } from "@langchain/core/prompts";
 
 interface SummerizePayload {
   url: string;
