@@ -7,6 +7,7 @@ import { coinSpend, minusCoins } from "@/actions/commonActions";
 import { YoutubeLoader } from "@langchain/community/document_loaders/web/youtube";
 import { Document } from "@langchain/core/documents";
 import { text } from "stream/consumers";
+import { TokenTextSplitter } from "@langchain/textsplitters";
 
 interface SummerizePayload {
   url: string;
@@ -80,7 +81,6 @@ export async function POST(request: NextRequest) {
       chunkSize: 10000,
       chunkOverlap: 250,
     });
-
     const docsSummary = await splitter.splitDocuments(text);
   } catch (error) {
     return NextResponse.json(
