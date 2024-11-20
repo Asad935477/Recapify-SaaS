@@ -1,6 +1,8 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import SummarizeLoader from "./SummarizeLoader";
+import axios, { AxiosError } from "axios";
+import { toast } from "sonner";
 
 export default function SummaryBase({ summary }: { summary: ChatType | null }) {
   const [loading, setLoading] = useState(true);
@@ -10,8 +12,37 @@ export default function SummaryBase({ summary }: { summary: ChatType | null }) {
     if (summary?.response) {
       setResponse(summary?.response!);
       setLoading(false);
+    } else {
+      summarize();
     }
   }, [summary]);
+
+  const summarize = async () => {
+    try {
+      if (response.length > 0) {
+        setLoading(false);
+        return true;
+      }
+      const { data } = await axios.post("/api/summarize", {
+        url: summary?.url,
+        id: summary?.id,
+      });
+      setLoading(false);
+      const res = data?.data;
+      if (res) {
+        setResponse(res);
+      }
+    } catch (error) {
+      setLoading(false);
+      if (error instanceof AxiosError) {
+        if ([500, 401, 400].includes(error.response?.status!)) {
+          toast.error(error.response?.data?.message);
+        } else {
+          toast.error("Something not right!");
+        }
+      }
+    }
+  };
 
   return (
     <div className="flex items-center flex-col w-full">
