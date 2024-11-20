@@ -1,7 +1,7 @@
 import React from "react";
 
-const SummaryBase = () => {
-  return <div></div>;
+const SummaryBase = ({ summary }: { summary: SummaryType | null }) => {
+  return <div>SummaryBase</div>;
 };
 
 export default SummaryBase;
