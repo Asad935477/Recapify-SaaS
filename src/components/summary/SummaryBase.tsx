@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 import SummarizeLoader from "./SummarizeLoader";
 import axios, { AxiosError } from "axios";
 import { toast } from "sonner";
+import Markdown from "react-markdown";
+import { clearCache } from "@/actions/commonActions";
 
 export default function SummaryBase({ summary }: { summary: ChatType | null }) {
   const [loading, setLoading] = useState(true);
@@ -31,6 +33,8 @@ export default function SummaryBase({ summary }: { summary: ChatType | null }) {
       const res = data?.data;
       if (res) {
         setResponse(res);
+        clearCache("userCoins");
+        clearCache("coinsSpend");
       }
     } catch (error) {
       setLoading(false);
@@ -50,7 +54,7 @@ export default function SummaryBase({ summary }: { summary: ChatType | null }) {
       {loading && <SummarizeLoader />}
       {response && (
         <div className="w-full md:w-[700px] rounded-lg bg-slate-100 shadow-md p-8">
-          {response}
+          <Markdown>{response}</Markdown>
         </div>
       )}
     </div>
