@@ -1,6 +1,6 @@
 "use server";
 import prisma from "@/lib/db.config";
-import { revalidatePath, revalidateTag } from "next/cache";
+import { revalidateTag } from "next/cache";
 
 export async function minusCoins(user_id: number | string): Promise<void> {
   await prisma.user.update({
