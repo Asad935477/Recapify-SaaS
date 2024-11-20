@@ -18,10 +18,13 @@ export default async function Summarize({
   if (!summary) {
     return notFound();
   }
+
   const session: CustomSession | null = await getServerSession(authOptions);
+  const userCoins = await getUserCoins(session?.user?.id!);
 
   return (
     <div className="container">
-      <DashNav user={session?.user} />
+      <DashNav user={session?.user} userCoins={userCoins} />
     </div>
   );
+}
