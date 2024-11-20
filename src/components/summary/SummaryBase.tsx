@@ -1,7 +1,14 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
+import SummarizeLoader from "./SummarizeLoader";
 
-const SummaryBase = ({ summary }: { summary: SummaryType | null }) => {
-  return <div>SummaryBase</div>;
-};
+export default function SummaryBase({ summary }: { summary: ChatType | null }) {
+  const [loading, setLoading] = useState(true);
 
-export default SummaryBase;
+  return (
+    <div className="flex items-center flex-col w-full">
+      <h1 className="text-2xl font-bold my-4">{summary?.title}</h1>
+      {loading && <SummarizeLoader />}
+    </div>
+  );
+}
