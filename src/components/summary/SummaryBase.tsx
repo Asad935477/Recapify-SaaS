@@ -6,7 +6,11 @@ import { toast } from "sonner";
 import Markdown from "react-markdown";
 import { clearCache } from "@/actions/commonActions";
 
-export default function SummaryBase({ summary }: { summary: ChatType | null }) {
+export default function SummaryBase({
+  summary,
+}: {
+  summary: SummaryType | null;
+}) {
   const [loading, setLoading] = useState(true);
   const [response, setResponse] = useState("");
 
