@@ -25,3 +25,16 @@ export const getSummary = async (id: string) => {
   });
   return summary;
 };
+
+export const getOldSummary = async (user_id: number | string) => {
+  return await prisma.summary.findMany({
+    select: {
+      id: true,
+      url: true,
+      title: true,
+      created_at: true,
+      user_id: true,
+    },
+    where: { user_id: Number(user_id) },
+  });
+};
