@@ -41,6 +41,6 @@ export async function updateSummary(data: string, id: string): Promise<void> {
   });
 }
 
-export function clearCache(key: string) {
+export async function clearCache(key: string) {
   revalidateTag(key);
 }
