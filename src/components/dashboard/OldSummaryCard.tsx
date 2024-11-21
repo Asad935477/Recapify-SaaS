@@ -4,7 +4,7 @@ import React from "react";
 
 export default function OldSummaryCard({ summary }: { summary: SummaryType }) {
   return (
-    <div className="bg-white shadow-md rounded-md p-4 h-52">
+    <div className="bg-white container mt-16 shadow-md rounded-md p-4 h-52">
       <h1 className="text-lg font-semibold">{summary.title}</h1>
       <Link href={`/summarize?id=${summary.id}`}>
         <h1 className="">{summary.url}</h1>
