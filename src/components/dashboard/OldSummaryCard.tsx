@@ -2,11 +2,7 @@
 import Link from "next/link";
 import React from "react";
 
-export default function OldSummaryCard({
-  summary,
-}: {
-  summary: UserSummaries;
-}) {
+export default function OldSummaryCard({ summary }: { summary: SummaryType }) {
   return (
     <div className="bg-white shadow-md rounded-md p-4 h-52">
       <h1 className="text-lg font-semibold">{summary.title}</h1>
