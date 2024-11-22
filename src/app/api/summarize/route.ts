@@ -22,23 +22,23 @@ export async function POST(request: NextRequest) {
   try {
     const session: CustomSession | null = await getServerSession(authOptions);
     if (!session) {
-      return NextResponse.json({ message: "UnAuthorized" }, { status: 401 });
+      return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     }
     const body: SummerizePayload = await request.json();
 
-    //*CHECK IF USER HAS SUFFICIENT COINS TO MAKE REQUESTS OR NOT
+    // Check if the user has sufficient coins to make requests
     const userCoins = await getUserCoins(session?.user?.id!);
     if (userCoins === null || (userCoins?.coins && userCoins?.coins <= 10)) {
       return NextResponse.json(
         {
           message:
-            "You Don't Have Sufficient Coins To Make More Requests. Please Add More Coins To Continue Using Our Services",
+            "You don't have sufficient coins to make more requests. Please add more coins to continue using our services.",
         },
         { status: 400 }
       );
     }
 
-    // CHECK IF THERE IS ANY IDENTICAL SUMMARY AVAILABLE
+    // Check if there is any identical summary available
     const oldSummary = await prisma.summary.findFirst({
       select: {
         response: true,
@@ -49,36 +49,41 @@ export async function POST(request: NextRequest) {
     });
 
     if (oldSummary != null && oldSummary.response) {
-      /*
-      TODOS
-        1. DEDUCT USER COINS FOR EACH REQUEST
-        2. ENTER THE DEDUCTED COIN INFO TO THE DATABASE
-      */
-      await minusCoins(session?.user?.id!);
+      // Deduct user coins and log the expenditure
+      const remainingCoins = await minusCoins(session?.user?.id!);
+      if (remainingCoins <= 0) {
+        return NextResponse.json(
+          {
+            message:
+              "You have run out of coins. Please add more coins to continue using our services.",
+          },
+          { status: 400 }
+        );
+      }
       await coinSpend(session?.user?.id!, body.id);
 
       return NextResponse.json({
         message: "Podcast / Video Summary",
         data: oldSummary?.response,
       });
+    }
 
-      // EXTRACTING TRANSCRIPT
-      let text: Document<Record<string, any>>[];
-      try {
-        const loader = YoutubeLoader.createFromUrl(body.url, {
-          language: "en",
-          addVideoInfo: true,
-        });
-        text = await loader.load();
-      } catch (error) {
-        return NextResponse.json(
-          {
-            message:
-              "Transcription Is Not Possible For This Video.. Please Try With Another One",
-          },
-          { status: 404 }
-        );
-      }
+    // Extracting transcript
+    let text: Document<Record<string, any>>[];
+    try {
+      const loader = YoutubeLoader.createFromUrl(body.url, {
+        language: "en",
+        addVideoInfo: true,
+      });
+      text = await loader.load();
+    } catch (error) {
+      return NextResponse.json(
+        {
+          message:
+            "Transcription is not possible for this video. Please try with another one.",
+        },
+        { status: 404 }
+      );
     }
 
     const splitter = new TokenTextSplitter({
@@ -94,19 +99,24 @@ export async function POST(request: NextRequest) {
     });
     const res = await summaryChain.invoke({ input_documents: docsSummary });
 
-    /*TODOS
-        1. DEDUCT USER COINS FOR EACH REQUEST
-        2. ENTER THE DEDUCTED COIN INFO TO THE DATABASE
-        3. UPDATE THE SUMMARY INFORMATION IN THE DATABASE*/
-
-    await minusCoins(session?.user?.id!);
+    // Deduct user coins, log the expenditure, and update the summary in the database
+    const remainingCoins = await minusCoins(session?.user?.id!);
+    if (remainingCoins <= 0) {
+      return NextResponse.json(
+        {
+          message:
+            "You have run out of coins. Please add more coins to continue using our services.",
+        },
+        { status: 400 }
+      );
+    }
     await coinSpend(session?.user?.id!, body.id);
     await updateSummary(res?.text, body.id);
 
     return NextResponse.json({ message: "Video Summary", data: res?.text });
   } catch (error) {
     return NextResponse.json(
-      { message: `Something Went Wrong!!! Please Try Again Later...` },
+      { message: "Something went wrong! Please try again later." },
       { status: 500 }
     );
   }
