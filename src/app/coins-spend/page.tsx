@@ -11,5 +11,7 @@ import Link from "next/link";
 
 export default async function CoinsSpend() {
   const session: CustomSession | null = await getServerSession(authOptions);
+  const userCoins = await getUserCoins(session?.user?.id!);
+  const coinsSpends = await getCoinsSpend(session?.user?.id!);
   return <div></div>;
 }
