@@ -34,7 +34,9 @@ export function ProfileDropdown({ user }: { user: CustomUser | null }) {
           <DropdownMenuItem onClick={() => router.push("/transactions")}>
             Transactions
           </DropdownMenuItem>
-          <DropdownMenuItem>Coins Spend</DropdownMenuItem>
+          <DropdownMenuItem onClick={() => router.push("/coins-spend")}>
+            Coins Spend
+          </DropdownMenuItem>
           <DropdownMenuItem onClick={() => setOpen(true)}>
             Logout
           </DropdownMenuItem>
