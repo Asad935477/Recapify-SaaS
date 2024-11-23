@@ -42,3 +42,14 @@ export const getOldSummary = unstable_cache(
   ["oldSummaries"],
   { revalidate: 60 * 60, tags: ["oldSummaries"] }
 );
+
+export const getCoinsSpend = async (user_id: number | string) => {
+  return await prisma.summary.findMany({
+    where: { user_id: Number(user_id) },
+    select: {
+      id: true,
+      url: true,
+      title: true,
+    },
+  });
+};
