@@ -8,3 +8,7 @@ import {
 } from "@/actions/fetchActions";
 import DashNav from "@/components/dashboard/DashNav";
 import Link from "next/link";
+
+export default async function CoinsSpend() {
+  return <div></div>;
+}
