@@ -10,5 +10,6 @@ import DashNav from "@/components/dashboard/DashNav";
 import Link from "next/link";
 
 export default async function CoinsSpend() {
+  const session: CustomSession | null = await getServerSession(authOptions);
   return <div></div>;
 }
