@@ -10,6 +10,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { CustomUser } from "@/app/api/auth/[...nextauth]/options";
+import { useRouter } from "next/navigation";
 import { UserAvatar } from "./UserAvatar";
 import dynamic from "next/dynamic";
 
