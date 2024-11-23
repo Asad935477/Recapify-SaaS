@@ -17,6 +17,7 @@ import dynamic from "next/dynamic";
 const LogoutModal = dynamic(() => import("../auth/LogoutModal"));
 
 export function ProfileDropdown({ user }: { user: CustomUser | null }) {
+  const router = useRouter();
   const [open, setOpen] = useState(false);
   return (
     <>
