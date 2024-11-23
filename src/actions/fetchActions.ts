@@ -51,5 +51,8 @@ export const getCoinsSpend = async (user_id: number | string) => {
       url: true,
       title: true,
     },
+    orderBy: {
+      id: "desc",
+    },
   });
 };

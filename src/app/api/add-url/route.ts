@@ -3,8 +3,6 @@ import { getToken } from "next-auth/jwt";
 import { NextRequest, NextResponse } from "next/server";
 import vine, { errors } from "@vinejs/vine";
 import { getUserCoins } from "@/actions/fetchActions";
-import { YoutubeLoader } from "@langchain/community/document_loaders/web/youtube";
-import { Document } from "@langchain/core/documents";
 import prisma from "@/lib/db.config";
 
 export async function POST(req: NextRequest) {
