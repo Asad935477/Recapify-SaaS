@@ -39,7 +39,7 @@ export default function Pricing({ user }: { user?: CustomUser }) {
           Simple, Transparent Pricing
         </h2>
         <p className="text-2xl text-indigo-500 font-bold text-center mb-12">
-          1 coin = 1 ₹
+          1 coin = 5 ₹
         </p>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <Card className={cn("shadow-lg", { "border-indigo-500": false })}>
