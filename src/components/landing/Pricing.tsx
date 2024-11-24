@@ -60,6 +60,11 @@ export default function Pricing({ user }: { user?: CustomUser }) {
                     Priority Support
                   </span>
                 </li>
+                <li>
+                  <span className="text-slate-400 line-through">
+                    Get One Podcast Summary Free 🚀
+                  </span>
+                </li>
               </ul>
               <Button
                 className="mt-4 w-full"
