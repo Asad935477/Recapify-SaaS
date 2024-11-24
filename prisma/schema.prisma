@@ -64,3 +64,6 @@ model CoinSpend {
 
   @@map("coins_spend")
 }
+
+model Products {
+}
