@@ -62,8 +62,9 @@ export default function Pricing({ user }: { user?: CustomUser }) {
                 </li>
                 <li>
                   <span className="text-slate-400 line-through">
-                    Get One Podcast Summary Free 🚀
+                    Get One Podcast Summary Free
                   </span>
+                  🚀
                 </li>
               </ul>
               <Button
