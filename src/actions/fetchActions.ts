@@ -47,10 +47,14 @@ export const getCoinsSpend = unstable_cache(
   async (user_id: number | string) => {
     return await prisma.summary.findMany({
       where: { user_id: Number(user_id) },
-      select: {
-        id: true,
-        url: true,
-        title: true,
+      include: {
+        summary: {
+          select: {
+            id: true,
+            url: true,
+            title: true,
+          },
+        },
       },
       orderBy: {
         id: "desc",
