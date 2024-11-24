@@ -45,7 +45,7 @@ export const getOldSummary = unstable_cache(
 
 export const getCoinsSpend = unstable_cache(
   async (user_id: number | string) => {
-    return await prisma.summary.findMany({
+    return await prisma.coinSpend.findMany({
       where: { user_id: Number(user_id) },
       include: {
         summary: {
