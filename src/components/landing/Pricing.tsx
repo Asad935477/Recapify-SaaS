@@ -55,6 +55,11 @@ export default function Pricing({ user }: { user?: CustomUser }) {
                 <li>10 Podcast Summary</li>
                 <li>Top Questions Highlight</li>
                 <li>AI-Powered Insights</li>
+                <li>
+                  <span className="text-slate-400 line-through">
+                    Priority Support
+                  </span>
+                </li>
               </ul>
               <Button
                 className="mt-4 w-full"
