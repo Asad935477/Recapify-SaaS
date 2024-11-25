@@ -55,6 +55,10 @@ export async function POST(req: NextRequest) {
       success_url: `${req.nextUrl.origin}/payment/success?txnId=${transaction.id}`,
       cancel_url: `${req.nextUrl.origin}/payment/cancel?txnId=${transaction.id}`,
     });
+    return NextResponse.json({
+      message: "Session Generated Successfully",
+      id: stripeSession?.id,
+    });
   } catch (error) {
     return NextResponse.json(
       { message: `Something Went Wrong!!! Please Try Again Later...` },
