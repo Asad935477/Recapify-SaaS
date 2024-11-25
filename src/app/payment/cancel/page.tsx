@@ -25,4 +25,6 @@ async function SuccessTxn({
       id: searchParams?.["txnId"],
     },
   });
+
+  clearCache("transactions");
 }
