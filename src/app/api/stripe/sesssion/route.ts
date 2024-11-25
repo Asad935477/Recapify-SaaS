@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { authOptions, CustomSession } from "../../auth/[...nextauth]/options";
 import { getServerSession } from "next-auth";
 import Stripe from "stripe";
-
+import prisma from "@/lib/db.config";
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 
 interface SessionPayload {
