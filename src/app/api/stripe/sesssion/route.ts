@@ -7,9 +7,16 @@ interface SessionPayload {
 }
 
 export async function POST(req: NextRequest) {
-  const session: CustomSession | null = await getServerSession(authOptions);
-  if (!session) {
-    return NextResponse.json({ message: "UnAuthorized" }, { status: 401 });
+  try {
+    const session: CustomSession | null = await getServerSession(authOptions);
+    if (!session) {
+      return NextResponse.json({ message: "UnAuthorized" }, { status: 401 });
+    }
+    const body: SessionPayload = await req.json();
+  } catch (error) {
+    return NextResponse.json(
+      { message: `Something Went Wrong!!! Please Try Again Later...` },
+      { status: 500 }
+    );
   }
-  const body: SessionPayload = await req.json();
 }
