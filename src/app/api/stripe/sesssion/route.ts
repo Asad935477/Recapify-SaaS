@@ -6,4 +6,9 @@ interface SessionPayload {
   plan: String;
 }
 
-export async function POST(req: NextRequest) {}
+export async function POST(req: NextRequest) {
+  const session: CustomSession | null = await getServerSession(authOptions);
+  if (!session) {
+    return NextResponse.json({ message: "UnAuthorized" }, { status: 401 });
+  }
+}
