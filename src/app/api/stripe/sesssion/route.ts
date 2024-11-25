@@ -31,6 +31,14 @@ export async function POST(req: NextRequest) {
         { status: 404 }
       );
     }
+
+    // CREATE TRANSACTION
+    const transaction = await prisma.transactions.create({
+      data: {
+        user_id: Number(session?.user?.id!),
+        amount: product.amount,
+      },
+    });
   } catch (error) {
     return NextResponse.json(
       { message: `Something Went Wrong!!! Please Try Again Later...` },
