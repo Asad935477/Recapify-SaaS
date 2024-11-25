@@ -1,7 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { authOptions, CustomSession } from "../../auth/[...nextauth]/options";
 import { getServerSession } from "next-auth";
-import stripe, { Stripe } from "stripe";
+import Stripe from "stripe";
+
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 
 interface SessionPayload {
   plan: String;
@@ -14,7 +16,6 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ message: "UnAuthorized" }, { status: 401 });
     }
     const body: SessionPayload = await req.json();
-    const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 
     //* GET PRODUCT
     const product = await prisma.products.findUnique({
@@ -55,6 +56,7 @@ export async function POST(req: NextRequest) {
       success_url: `${req.nextUrl.origin}/payment/success?txnId=${transaction.id}`,
       cancel_url: `${req.nextUrl.origin}/payment/cancel?txnId=${transaction.id}`,
     });
+
     return NextResponse.json({
       message: "Session Generated Successfully",
       id: stripeSession?.id,
