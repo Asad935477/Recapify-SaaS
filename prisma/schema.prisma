@@ -48,7 +48,7 @@ model Transactions {
   user_id    Int
   user       User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
   amount     Int
-  status     Int      @db.SmallInt
+  status     Int      @default(2) @db.SmallInt
   created_at DateTime @default(now())
 
   @@map("transactions")
