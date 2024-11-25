@@ -69,7 +69,7 @@ export default function Pricing({ user }: { user?: CustomUser }) {
               </ul>
               <Button
                 className="mt-4 w-full"
-                onClick={() => initiatePayment("Starter")}
+                onClick={() => initiatePayment("Starter Plan")}
                 disabled={loading}
               >
                 Buy Coins
@@ -95,7 +95,7 @@ export default function Pricing({ user }: { user?: CustomUser }) {
               </ul>
               <Button
                 className="mt-4 w-full"
-                onClick={() => initiatePayment("Pro")}
+                onClick={() => initiatePayment("Pro Plan")}
                 disabled={loading}
               >
                 Buy Coins
@@ -119,7 +119,7 @@ export default function Pricing({ user }: { user?: CustomUser }) {
               </ul>
               <Button
                 className="mt-4 w-full"
-                onClick={() => initiatePayment("Pro Plus")}
+                onClick={() => initiatePayment("Pro Plus Plan")}
                 disabled={loading}
               >
                 Buy Coins
