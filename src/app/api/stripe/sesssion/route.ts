@@ -39,6 +39,22 @@ export async function POST(req: NextRequest) {
         amount: product.amount,
       },
     });
+
+    //* CREATE STRIPE SESSION
+    const stripeSession = await stripe.checkout.sessions.create({
+      payment_method_types: ["card"],
+      currency: "INR",
+      billing_address_collection: "required",
+      line_items: [
+        {
+          price: product.price_id,
+          quantity: 1,
+        },
+      ],
+      mode: "payment",
+      success_url: `${req.nextUrl.origin}/payment/success?txnId=${transaction.id}`,
+      cancel_url: `${req.nextUrl.origin}/payment/cancel?txnId=${transaction.id}`,
+    });
   } catch (error) {
     return NextResponse.json(
       { message: `Something Went Wrong!!! Please Try Again Later...` },
