@@ -41,3 +41,5 @@ async function SuccessTxn({
     </div>
   );
 }
+
+export default SuccessTxn;
