@@ -11,4 +11,5 @@ export async function POST(req: NextRequest) {
   if (!session) {
     return NextResponse.json({ message: "UnAuthorized" }, { status: 401 });
   }
+  const body: SessionPayload = await req.json();
 }
