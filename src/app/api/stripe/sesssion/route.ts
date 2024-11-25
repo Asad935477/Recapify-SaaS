@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { authOptions, CustomSession } from "../../auth/[...nextauth]/options";
 import { getServerSession } from "next-auth";
+import stripe from "stripe";
 
 interface SessionPayload {
   plan: String;
