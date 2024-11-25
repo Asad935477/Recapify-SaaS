@@ -26,4 +26,9 @@ async function SuccessTxn({
       id: searchParams?.["txnId"],
     },
   });
+
+  //*UPDATE COINS
+  await addCoins(transaction.user_id, getCoinsFromAmount(transaction.amount));
+  clearCache("userCoins");
+  clearCache("transactions");
 }
