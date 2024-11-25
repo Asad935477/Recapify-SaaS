@@ -18,4 +18,12 @@ async function SuccessTxn({
   if (!transaction) {
     return notFound();
   }
+  await prisma.transaction.update({
+    data: {
+      status: 1,
+    },
+    where: {
+      id: searchParams?.["txnId"],
+    },
+  });
 }
