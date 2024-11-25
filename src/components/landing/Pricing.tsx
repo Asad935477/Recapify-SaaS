@@ -7,7 +7,6 @@ import { CustomUser } from "@/app/api/auth/[...nextauth]/options";
 import { toast } from "sonner";
 import axios, { AxiosError } from "axios";
 import getStripe from "@/lib/stripe";
-// import getStripe from "@/lib/stripe";
 export default function Pricing({ user }: { user?: CustomUser }) {
   const [loading, setLoading] = useState(false);
 
