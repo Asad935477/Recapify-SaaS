@@ -71,7 +71,7 @@ model Products {
   price_id   String   @db.VarChar(191)
   product_id String   @db.VarChar(191)
   currency   String   @db.VarChar(9)
-  ammount    Int
+  amount     Int
   created_at DateTime @default(now())
 
   @@map("products")
