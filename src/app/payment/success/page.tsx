@@ -18,7 +18,7 @@ async function SuccessTxn({
   if (!transaction) {
     return notFound();
   }
-  await prisma.transaction.update({
+  await prisma.transactions.update({
     data: {
       status: 1,
     },
