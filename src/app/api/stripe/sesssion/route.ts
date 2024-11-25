@@ -15,6 +15,22 @@ export async function POST(req: NextRequest) {
     }
     const body: SessionPayload = await req.json();
     const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
+
+    //* GET PRODUCT
+    const product = await prisma.products.findUnique({
+      where: {
+        name: body.plan,
+      },
+    });
+
+    if (!product) {
+      return NextResponse.json(
+        {
+          message: "No Product found with this plan.",
+        },
+        { status: 404 }
+      );
+    }
   } catch (error) {
     return NextResponse.json(
       { message: `Something Went Wrong!!! Please Try Again Later...` },
