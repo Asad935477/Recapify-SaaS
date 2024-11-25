@@ -5,3 +5,5 @@ import { getServerSession } from "next-auth";
 interface SessionPayload {
   plan: String;
 }
+
+export async function POST(req: NextRequest) {}
