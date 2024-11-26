@@ -48,7 +48,7 @@ model Transactions {
   user_id    Int
   user       User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
   amount     Int
-  status     Int      @db.SmallInt
+  status     Int      @default(2) @db.SmallInt
   created_at DateTime @default(now())
 
   @@map("transactions")
@@ -63,4 +63,16 @@ model CoinSpend {
   created_at DateTime @default(now())
 
   @@map("coins_spend")
+}
+
+model Products {
+  id         Int      @id @default(autoincrement())
+  name       String   @unique @db.VarChar(30)
+  price_id   String   @db.VarChar(191)
+  product_id String   @db.VarChar(191)
+  currency   String   @db.VarChar(9)
+  ammount    Int
+  created_at DateTime @default(now())
+
+  @@map("products")
 }

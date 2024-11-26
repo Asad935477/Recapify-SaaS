@@ -6,30 +6,30 @@ import { Button } from "../ui/button";
 import { CustomUser } from "@/app/api/auth/[...nextauth]/options";
 import { toast } from "sonner";
 import axios, { AxiosError } from "axios";
-// import getStripe from "@/lib/stripe";
+import getStripe from "@/lib/stripe";
 export default function Pricing({ user }: { user?: CustomUser }) {
   const [loading, setLoading] = useState(false);
 
   const initiatePayment = async (plan: string) => {
-    // if (!user) {
-    //   toast.error("Please login first.");
-    // }
-    // setLoading(true);
-    // try {
-    //   const { data } = await axios.post("/api/stripe/session", { plan: plan });
-    //   if (data?.id) {
-    //     const stripe = await getStripe();
-    //     await stripe?.redirectToCheckout({ sessionId: data?.id });
-    //   }
-    //   setLoading(false);
-    // } catch (error) {
-    //   setLoading(false);
-    //   if (error instanceof AxiosError) {
-    //     toast.error(error?.response?.data?.message);
-    //   } else {
-    //     toast.error("Something went wrong.please try again!");
-    //   }
-    // }
+    if (!user) {
+      toast.error("Please login first.");
+    }
+    setLoading(true);
+    try {
+      const { data } = await axios.post("/api/stripe/session", { plan: plan });
+      if (data?.id) {
+        const stripe = await getStripe();
+        await stripe?.redirectToCheckout({ sessionId: data?.id });
+      }
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      if (error instanceof AxiosError) {
+        toast.error(error?.response?.data?.message);
+      } else {
+        toast.error("Something went wrong.please try again!");
+      }
+    }
   };
 
   return (
@@ -39,7 +39,7 @@ export default function Pricing({ user }: { user?: CustomUser }) {
           Simple, Transparent Pricing
         </h2>
         <p className="text-2xl text-indigo-500 font-bold text-center mb-12">
-          1 coin = 1 ₹
+          1 coin = 5 ₹
         </p>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <Card className={cn("shadow-lg", { "border-indigo-500": false })}>
@@ -55,10 +55,21 @@ export default function Pricing({ user }: { user?: CustomUser }) {
                 <li>10 Podcast Summary</li>
                 <li>Top Questions Highlight</li>
                 <li>AI-Powered Insights</li>
+                <li>
+                  <span className="text-slate-400 line-through">
+                    Priority Support
+                  </span>
+                </li>
+                <li>
+                  <span className="text-slate-400 line-through">
+                    Get One Podcast Summary Free
+                  </span>
+                  🚀
+                </li>
               </ul>
               <Button
                 className="mt-4 w-full"
-                onClick={() => initiatePayment("Starter")}
+                onClick={() => initiatePayment("Starter Plan")}
                 disabled={loading}
               >
                 Buy Coins
@@ -84,7 +95,7 @@ export default function Pricing({ user }: { user?: CustomUser }) {
               </ul>
               <Button
                 className="mt-4 w-full"
-                onClick={() => initiatePayment("Pro")}
+                onClick={() => initiatePayment("Pro Plan")}
                 disabled={loading}
               >
                 Buy Coins
@@ -108,7 +119,7 @@ export default function Pricing({ user }: { user?: CustomUser }) {
               </ul>
               <Button
                 className="mt-4 w-full"
-                onClick={() => initiatePayment("Pro Plus")}
+                onClick={() => initiatePayment("Pro Plus Plan")}
                 disabled={loading}
               >
                 Buy Coins

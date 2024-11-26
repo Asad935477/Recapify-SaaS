@@ -1,6 +1,10 @@
 import React from "react";
 import { notFound } from "next/navigation";
-import { getSummary } from "@/actions/fetchActions";
+import { getSummary, getUserCoins } from "@/actions/fetchActions";
+import DashNav from "@/components/dashboard/DashNav";
+import { authOptions, CustomSession } from "../api/auth/[...nextauth]/options";
+import { getServerSession } from "next-auth";
+import SummaryBase from "@/components/summary/SummaryBase";
 
 export default async function Summarize({
   searchParams,
@@ -16,9 +20,13 @@ export default async function Summarize({
     return notFound();
   }
 
+  const session: CustomSession | null = await getServerSession(authOptions);
+  const userCoins = await getUserCoins(session?.user?.id!);
+
   return (
-    <div>
-      <p>{searchParams?.["id"]}</p>
+    <div className="container">
+      <DashNav user={session?.user} userCoins={userCoins} />
+      <SummaryBase summary={summary} />
     </div>
   );
 }
