@@ -4,6 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 import vine, { errors } from "@vinejs/vine";
 import { getUserCoins } from "@/actions/fetchActions";
 import prisma from "@/lib/db.config";
+import { YoutubeLoader } from "@langchain/community/document_loaders/web/youtube";
 
 export async function POST(req: NextRequest) {
   try {
@@ -36,6 +37,7 @@ export async function POST(req: NextRequest) {
       });
       text = await loader.load();
     } catch (error) {
+      console.log("PROBLEM: ", error);
       return NextResponse.json(
         {
           message:
