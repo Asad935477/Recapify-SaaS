@@ -34,8 +34,8 @@ export async function POST(req: NextRequest) {
     // * Create Transaction
     const transaction = await prisma.transactions.create({
       data: {
-        user_id: Number(session?.user?.id!),
-        amount: product.amount,
+        user_id: Number(session.user?.id),
+        amount: product.ammount,
       },
     });
 
@@ -62,7 +62,7 @@ export async function POST(req: NextRequest) {
   } catch (error) {
     console.log("The error is", error);
     return NextResponse.json(
-      { message: "Something went wrong.please try again!" },
+      { message: "Something went wrong please try again!" },
       { status: 500 }
     );
   }
