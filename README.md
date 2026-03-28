@@ -1,6 +1,6 @@
 # Recapify-SaaS
 
-Recapify: Instantly generate concise summaries of YouTube videos and podcasts using GPT-4. Save time by getting key points from lengthy content in just a few seconds.
+Recapify: Instantly generate concise summaries of YouTube Videos and podcasts using GPT-4. Save time by getting key points from lengthy content in just a few seconds.
 
 ## Getting Started
 
